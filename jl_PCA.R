@@ -231,7 +231,7 @@ musc_indiv_pca<-prcomp(musc_indiv, scale=TRUE, scores=TRUE)
 #determine eigenvalues
 musc_indiv_eigen<-pca.eigenval(musc_indiv_pca)
 #see which eigenvalues are significant
-screeplot(musc_indiv_pca, bstick=T)
+#screeplot(musc_indiv_pca, bstick=T)
 #see loadings.  square these to get percentage of variance in each original variable
 #accounted for by each principal component
 musc_indiv_struc<-pca.structure(musc_indiv_pca, musc_indiv, dim=7, cutoff=0.5)
@@ -248,11 +248,11 @@ pchs <- as.integer(as.vector(pchs))
 bgs <- factor(as.vector(as.matrix((data_full[5,2:49]))))
 levels(bgs) <- c('black', 'white')
 bgs <- as.vector(bgs)
-cols <- factor(as.vector(as.matrix(data_full[3,2:length(data_full[1,])])))
+cols <- factor(as.vector(as.matrix(data_full[3,2:49])))
 
 #first and second principal components
 musc_indiv_12<-ordiplot(musc_indiv_pca, choices=c(1,2), type="none",
-                        main="PC 1 and 2", ylim=c(-6.5, 5))
+                        main="Musc-Indiv PC 1 and 2", ylim=c(-6.5, 5))
 points(musc_indiv_12, "sites", pch=pchs,
        col=cols, bg=bgs)
 arrows(0,0,musc_indiv_pca$rotation[-c(1,6,16,17,19),1]*10,
@@ -267,7 +267,8 @@ legend("bottomleft", legend=c("Entry", "Holding", "Post-spawn", "Pre-stream", "H
        pt.bg=c(NA, NA, NA, "white", "white", "white", "black", "white"))
 
 #first and third PCs
-musc_indiv_13<-ordiplot(musc_indiv_pca, choices=c(1,3), type="none", main="PC 1 and 3")
+musc_indiv_13<-ordiplot(musc_indiv_pca, choices=c(1,3),
+                        type="none", main="Musc-Indiv PC 1 and 3")
 points(musc_indiv_13, "sites", pch=pchs,
        col=cols, bg=bgs)
 arrows(0,0,musc_indiv_pca$rotation[-c(1,4,5,9,15,16,19),1]*10,
@@ -300,7 +301,7 @@ musc_grouped_pca<-prcomp(musc_grouped, scale=TRUE, scores=TRUE)
 #determine eigenvalues
 musc_grouped_eigen<-pca.eigenval(musc_grouped_pca)
 #see which eigenvalues are significant
-screeplot(musc_grouped_pca, bstick=T)
+#screeplot(musc_grouped_pca, bstick=T)
 #see loadings.  square these to get percentage of variance in each original variable
 #accounted for by each principal component
 musc_grouped_struc<-pca.structure(musc_grouped_pca, musc_grouped, dim=7, cutoff=0.5)
@@ -316,11 +317,11 @@ pchs <- as.integer(as.vector(pchs))
 bgs <- factor(as.vector(as.matrix((data_full[5,2:49]))))
 levels(bgs) <- c('black', 'white')
 bgs <- as.vector(bgs)
-cols <- factor(as.vector(as.matrix(data_full[3,2:length(data_full[1,])])))
+cols <- factor(as.vector(as.matrix(data_full[3,2:49])))
 
 #first and second principal components
 musc_grouped_12<-ordiplot(musc_grouped_pca, choices=c(1,2), type="none",
-                        main="PC 1 and 2", ylim=c(-2.5, 4))
+                        main="Musc-Grouped PC 1 and 2", ylim=c(-2.5, 4))
 points(musc_grouped_12, "sites", pch=pchs,
        col=cols, bg=bgs)
 arrows(0,0,musc_grouped_pca$rotation[,1]*3, musc_grouped_pca$rotation[,2]*3, col="black")
@@ -351,7 +352,7 @@ skin_indiv_pca<-prcomp(skin_indiv, scale=TRUE, scores=TRUE)
 #determine eigenvalues
 skin_indiv_eigen<-pca.eigenval(skin_indiv_pca)
 #see which eigenvalues are significant
-screeplot(skin_indiv_pca, bstick=T)
+#screeplot(skin_indiv_pca, bstick=T)
 #see loadings.  square these to get percentage of variance in each original variable
 #accounted for by each principal component
 skin_indiv_struc<-pca.structure(skin_indiv_pca, skin_indiv, dim=7, cutoff=0.5)
@@ -360,19 +361,18 @@ skin_indiv_scores<-skin_indiv_pca$x[,1:7]
 #test loadings for significance
 #testdim(skin_indiv_pca) #gotta figure out how to convert from 'prcomp' class to 'pca' class
 
-
 #plot PCA
-pchs <- factor(as.vector(as.matrix((data_full[4,2:49]))))
+pchs <- factor(as.vector(as.matrix(data_full[4,50:79])))
 levels(pchs) <- c(21,22,24)
 pchs <- as.integer(as.vector(pchs))
-bgs <- factor(as.vector(as.matrix((data_full[5,2:49]))))
+bgs <- factor(as.vector(as.matrix(data_full[5,50:79])))
 levels(bgs) <- c('black', 'white')
 bgs <- as.vector(bgs)
-cols <- factor(as.vector(as.matrix(data_full[3,2:length(data_full[1,])])))
+cols <- factor(as.vector(as.matrix(data_full[3,50:79])))
 
 #first and second principal components
 skin_indiv_12<-ordiplot(skin_indiv_pca, choices=c(1,2), type="none",
-                        main="PC 1 and 2", ylim=c(-3.5, 5))
+                        main="Skin-Indiv PC 1 and 2", ylim=c(-3.5,4.5), xlim=c(-4.2,5.2))
 points(skin_indiv_12, "sites", pch=pchs,
        col=cols, bg=bgs)
 arrows(0,0,skin_indiv_pca$rotation[-c(5,10,15,17),1]*8,
@@ -388,7 +388,7 @@ legend("topright", legend=c("Entry", "Holding", "Post-spawn", "Pre-stream", "Han
 
 #first and third PCs
 skin_indiv_13<-ordiplot(skin_indiv_pca, choices=c(1,3), type="none",
-                        main="PC 1 and 3", ylim=c(-4, 5))
+                        main="Skin-Indiv PC 1 and 3", ylim=c(-4, 5.2))
 points(skin_indiv_13, "sites", pch=pchs,
        col=cols, bg=bgs)
 arrows(0,0,skin_indiv_pca$rotation[-c(1,5,9,15,19),1]*8,
@@ -421,7 +421,7 @@ skin_grouped_pca<-prcomp(skin_grouped, scale=TRUE, scores=TRUE)
 #determine eigenvalues
 skin_grouped_eigen<-pca.eigenval(skin_grouped_pca)
 #see which eigenvalues are significant
-screeplot(skin_grouped_pca, bstick=T)
+#screeplot(skin_grouped_pca, bstick=T)
 #see loadings.  square these to get percentage of variance in each original variable
 #accounted for by each principal component
 skin_grouped_struc<-pca.structure(skin_grouped_pca, skin_grouped, dim=7, cutoff=0.5)
@@ -431,17 +431,17 @@ skin_grouped_scores<-skin_grouped_pca$x[,1:7]
 #testdim(skin_grouped_pca) #gotta figure out how to convert from 'prcomp' class to 'pca' class
 
 #plot PCA
-pchs <- factor(as.vector(as.matrix((data_full[4,2:49]))))
+pchs <- factor(as.vector(as.matrix((data_full[4,50:79]))))
 levels(pchs) <- c(21,22,24)
 pchs <- as.integer(as.vector(pchs))
-bgs <- factor(as.vector(as.matrix((data_full[5,2:49]))))
+bgs <- factor(as.vector(as.matrix((data_full[5,50:79]))))
 levels(bgs) <- c('black', 'white')
 bgs <- as.vector(bgs)
-cols <- factor(as.vector(as.matrix(data_full[3,2:length(data_full[1,])])))
+cols <- factor(as.vector(as.matrix(data_full[3,50:79])))
 
 #first and second principal components
 skin_grouped_12<-ordiplot(skin_grouped_pca, choices=c(1,2), type="none",
-                          main="PC 1 and 2", ylim=c(-3.5, 2.5))
+                          main="Skin-Grouped PC 1 and 2", ylim=c(-3.5, 2.5))
 points(skin_grouped_12, "sites", pch=pchs,
        col=cols, bg=bgs)
 arrows(0,0,skin_grouped_pca$rotation[,1]*3, skin_grouped_pca$rotation[,2]*3, col="black")
@@ -455,7 +455,7 @@ legend("bottomright", legend=c("Entry", "Holding", "Post-spawn", "Pre-stream", "
 
 #first and third pcs
 skin_grouped_12<-ordiplot(skin_grouped_pca, choices=c(1,3), type="none",
-                          main="PC 1 and 3")
+                          main="Skin-Grouped PC 1 and 3")
 points(skin_grouped_12, "sites", pch=pchs,
        col=cols, bg=bgs)
 arrows(0,0,skin_grouped_pca$rotation[,1]*3, skin_grouped_pca$rotation[,3]*3, col="black")
