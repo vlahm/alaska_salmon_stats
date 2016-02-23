@@ -1,11 +1,11 @@
 #Jordan Lee
 #Alaska Salmon FA PCAs 2016
-#Last edit: 1/20/16
+#Last edit: 2/22/16
 #Contact: Mike Vlah (vlahm13@gmail.com)
 
 dev.off()
 rm(list=ls())
-windows(record=T)
+# windows(record=T)
 setwd("C:/Users/Mike/Desktop/Grad/Projects/for_others/j_lee_stats_2015")
 data_full<-read.csv("PCA_data.csv", header=FALSE)
 palette(c('deepskyblue', 'green', 'magenta'))
@@ -246,41 +246,45 @@ pchs <- factor(as.vector(as.matrix((data_full[4,2:49]))))
 levels(pchs) <- c(21,22,24)
 pchs <- as.integer(as.vector(pchs))
 bgs <- factor(as.vector(as.matrix((data_full[5,2:49]))))
-levels(bgs) <- c('black', 'white')
+levels(bgs) <- c('gray50', 'white')
 bgs <- as.vector(bgs)
 cols <- factor(as.vector(as.matrix(data_full[3,2:49])))
 
 #first and second principal components
+pdf(file="C:\\Users\\Mike\\Desktop\\musc_indiv_12.pdf")
 musc_indiv_12<-ordiplot(musc_indiv_pca, choices=c(1,2), type="none",
                         main="Musc-Indiv PC 1 and 2", ylim=c(-6.5, 5))
-points(musc_indiv_12, "sites", pch=pchs,
-       col=cols, bg=bgs)
 arrows(0,0,musc_indiv_pca$rotation[-c(1,6,16,17,19),1]*10,
-       musc_indiv_pca$rotation[-c(1,6,16,17,19),2]*10, col="black")
+       musc_indiv_pca$rotation[-c(1,6,16,17,19),2]*10, col="gray60", length=.1)
+points(musc_indiv_12, "sites", pch=pchs,
+       col=cols, bg=bgs, cex=1.6)
 text(musc_indiv_pca$rotation[-c(1,6,16,17,19),1]*12,
      musc_indiv_pca$rotation[-c(1,6,16,17,19),2]*12,
-     row.names(musc_indiv_pca$rotation), col="black")
+     row.names(musc_indiv_pca$rotation)[-c(1,6,16,17,19)], col="black")
 legend("bottomleft", legend=c("Entry", "Holding", "Post-spawn", "Pre-stream", "Hansen",
                               "Pick", "Female", "Male"),
        fill=c(1, 2, 3, "white", "white", "white", "white", "white"), border="white",
        pch=c(NA, NA, NA, 21, 22, 24, 21, 21),
-       pt.bg=c(NA, NA, NA, "white", "white", "white", "black", "white"))
+       pt.bg=c(NA, NA, NA, "white", "white", "white", "gray50", "white"))
+dev.off()
 
 #first and third PCs
+pdf(file="C:\\Users\\Mike\\Desktop\\musc_indiv_13.pdf")
 musc_indiv_13<-ordiplot(musc_indiv_pca, choices=c(1,3),
                         type="none", main="Musc-Indiv PC 1 and 3")
-points(musc_indiv_13, "sites", pch=pchs,
-       col=cols, bg=bgs)
 arrows(0,0,musc_indiv_pca$rotation[-c(1,4,5,9,15,16,19),1]*10,
-       musc_indiv_pca$rotation[-c(1,4,5,9,15,16,19),3]*10, col="black")
+       musc_indiv_pca$rotation[-c(1,4,5,9,15,16,19),3]*10, col="gray60", length=.1)
+points(musc_indiv_13, "sites", pch=pchs,
+       col=cols, bg=bgs, cex=1.6)
 text(musc_indiv_pca$rotation[-c(1,4,5,9,15,16,19),1]*12,
      musc_indiv_pca$rotation[-c(1,4,5,9,15,16,19),3]*12,
-     row.names(musc_indiv_pca$rotation), col="black")
+     row.names(musc_indiv_pca$rotation)[-c(1,4,5,9,15,16,19)], col="black")
 legend("bottomleft", legend=c("Entry", "Holding", "Post-spawn", "Pre-stream", "Hansen",
                               "Pick", "Female", "Male"),
        fill=c(1, 2, 3, "white", "white", "white", "white", "white"), border="white",
        pch=c(NA, NA, NA, 21, 22, 24, 21, 21),
-       pt.bg=c(NA, NA, NA, "white", "white", "white", "black", "white"))
+       pt.bg=c(NA, NA, NA, "white", "white", "white", "gray50", "white"))
+dev.off()
 
 #muscle - grouped FAs####
 
@@ -315,23 +319,26 @@ pchs <- factor(as.vector(as.matrix((data_full[4,2:49]))))
 levels(pchs) <- c(21,22,24)
 pchs <- as.integer(as.vector(pchs))
 bgs <- factor(as.vector(as.matrix((data_full[5,2:49]))))
-levels(bgs) <- c('black', 'white')
+levels(bgs) <- c('gray50', 'white')
 bgs <- as.vector(bgs)
 cols <- factor(as.vector(as.matrix(data_full[3,2:49])))
 
 #first and second principal components
+pdf(file="C:\\Users\\Mike\\Desktop\\musc_grouped_12.pdf")
 musc_grouped_12<-ordiplot(musc_grouped_pca, choices=c(1,2), type="none",
                         main="Musc-Grouped PC 1 and 2", ylim=c(-2.5, 4))
+arrows(0,0,musc_grouped_pca$rotation[,1]*3, musc_grouped_pca$rotation[,2]*3,
+       col="gray60", length=.1)
 points(musc_grouped_12, "sites", pch=pchs,
-       col=cols, bg=bgs)
-arrows(0,0,musc_grouped_pca$rotation[,1]*3, musc_grouped_pca$rotation[,2]*3, col="black")
+       col=cols, bg=bgs, cex=1.6)
 text(musc_grouped_pca$rotation[,1]*3.5, musc_grouped_pca$rotation[,2]*3.5,
      row.names(musc_grouped_pca$rotation), col="black")
 legend("topleft", legend=c("Entry", "Holding", "Post-spawn", "Pre-stream", "Hansen",
                               "Pick", "Female", "Male"),
        fill=c(1, 2, 3, "white", "white", "white", "white", "white"), border="white",
        pch=c(NA, NA, NA, 21, 22, 24, 21, 21),
-       pt.bg=c(NA, NA, NA, "white", "white", "white", "black", "white"))
+       pt.bg=c(NA, NA, NA, "white", "white", "white", "gray50", "white"))
+dev.off()
 
 #skin - individual FAs####
 
@@ -366,41 +373,45 @@ pchs <- factor(as.vector(as.matrix(data_full[4,50:79])))
 levels(pchs) <- c(21,22,24)
 pchs <- as.integer(as.vector(pchs))
 bgs <- factor(as.vector(as.matrix(data_full[5,50:79])))
-levels(bgs) <- c('black', 'white')
+levels(bgs) <- c('gray50', 'white')
 bgs <- as.vector(bgs)
 cols <- factor(as.vector(as.matrix(data_full[3,50:79])))
 
 #first and second principal components
+pdf(file="C:\\Users\\Mike\\Desktop\\skin_indiv_12.pdf")
 skin_indiv_12<-ordiplot(skin_indiv_pca, choices=c(1,2), type="none",
                         main="Skin-Indiv PC 1 and 2", ylim=c(-3.5,4.5), xlim=c(-4.2,5.2))
-points(skin_indiv_12, "sites", pch=pchs,
-       col=cols, bg=bgs)
 arrows(0,0,skin_indiv_pca$rotation[-c(5,10,15,17),1]*8,
-       skin_indiv_pca$rotation[-c(5,10,15,17),2]*8, col="black")
+       skin_indiv_pca$rotation[-c(5,10,15,17),2]*8, col="gray60", length=.1)
+points(skin_indiv_12, "sites", pch=pchs,
+       col=cols, bg=bgs, cex=1.6)
 text(skin_indiv_pca$rotation[-c(5,10,15,17),1]*8.5,
      skin_indiv_pca$rotation[-c(5,10,15,17),2]*8.5,
-     row.names(skin_indiv_pca$rotation), col="black")
+     row.names(skin_indiv_pca$rotation)[-c(5,10,15,17)], col="black")
 legend("topright", legend=c("Entry", "Holding", "Post-spawn", "Pre-stream", "Hansen",
                               "Pick", "Female", "Male"),
        fill=c(1, 2, 3, "white", "white", "white", "white", "white"), border="white",
        pch=c(NA, NA, NA, 21, 22, 24, 21, 21),
-       pt.bg=c(NA, NA, NA, "white", "white", "white", "black", "white"))
+       pt.bg=c(NA, NA, NA, "white", "white", "white", "gray50", "white"))
+dev.off()
 
 #first and third PCs
+pdf(file="C:\\Users\\Mike\\Desktop\\skin_indiv_13.pdf")
 skin_indiv_13<-ordiplot(skin_indiv_pca, choices=c(1,3), type="none",
                         main="Skin-Indiv PC 1 and 3", ylim=c(-4, 5.2))
-points(skin_indiv_13, "sites", pch=pchs,
-       col=cols, bg=bgs)
 arrows(0,0,skin_indiv_pca$rotation[-c(1,5,9,15,19),1]*8,
-       skin_indiv_pca$rotation[-c(1,5,9,15,19),3]*8, col="black")
+       skin_indiv_pca$rotation[-c(1,5,9,15,19),3]*8, col="gray60", length=.1)
+points(skin_indiv_13, "sites", pch=pchs,
+       col=cols, bg=bgs, cex=1.6)
 text(skin_indiv_pca$rotation[-c(1,5,9,15,19),1]*8.5,
      skin_indiv_pca$rotation[-c(1,5,9,15,19),3]*8.5,
-     row.names(skin_indiv_pca$rotation), col="black")
+     row.names(skin_indiv_pca$rotation)[-c(1,5,9,15,19)], col="black")
 legend("topleft", legend=c("Entry", "Holding", "Post-spawn", "Pre-stream", "Hansen",
                               "Pick", "Female", "Male"),
        fill=c(1, 2, 3, "white", "white", "white", "white", "white"), border="white",
        pch=c(NA, NA, NA, 21, 22, 24, 21, 21),
-       pt.bg=c(NA, NA, NA, "white", "white", "white", "black", "white"))
+       pt.bg=c(NA, NA, NA, "white", "white", "white", "gray50", "white"))
+dev.off()
 
 #skin - grouped FAs####
 
@@ -435,34 +446,40 @@ pchs <- factor(as.vector(as.matrix((data_full[4,50:79]))))
 levels(pchs) <- c(21,22,24)
 pchs <- as.integer(as.vector(pchs))
 bgs <- factor(as.vector(as.matrix((data_full[5,50:79]))))
-levels(bgs) <- c('black', 'white')
+levels(bgs) <- c('gray50', 'white')
 bgs <- as.vector(bgs)
 cols <- factor(as.vector(as.matrix(data_full[3,50:79])))
 
 #first and second principal components
+pdf(file="C:\\Users\\Mike\\Desktop\\skin_grouped_12.pdf")
 skin_grouped_12<-ordiplot(skin_grouped_pca, choices=c(1,2), type="none",
                           main="Skin-Grouped PC 1 and 2", ylim=c(-3.5, 2.5))
+arrows(0,0,skin_grouped_pca$rotation[,1]*3, skin_grouped_pca$rotation[,2]*3,
+       col="gray60", length=.1)
 points(skin_grouped_12, "sites", pch=pchs,
-       col=cols, bg=bgs)
-arrows(0,0,skin_grouped_pca$rotation[,1]*3, skin_grouped_pca$rotation[,2]*3, col="black")
+       col=cols, bg=bgs, cex=1.6)
 text(skin_grouped_pca$rotation[,1]*3.5, skin_grouped_pca$rotation[,2]*3.5,
      row.names(skin_grouped_pca$rotation), col="black")
 legend("bottomright", legend=c("Entry", "Holding", "Post-spawn", "Pre-stream", "Hansen",
                            "Pick", "Female", "Male"),
        fill=c(1, 2, 3, "white", "white", "white", "white", "white"), border="white",
        pch=c(NA, NA, NA, 21, 22, 24, 21, 21),
-       pt.bg=c(NA, NA, NA, "white", "white", "white", "black", "white"))
+       pt.bg=c(NA, NA, NA, "white", "white", "white", "gray50", "white"))
+dev.off()
 
 #first and third pcs
+pdf(file="C:\\Users\\Mike\\Desktop\\skin_grouped_13.pdf")
 skin_grouped_12<-ordiplot(skin_grouped_pca, choices=c(1,3), type="none",
                           main="Skin-Grouped PC 1 and 3")
+arrows(0,0,skin_grouped_pca$rotation[,1]*3, skin_grouped_pca$rotation[,3]*3,
+       col="gray60", length=.1)
 points(skin_grouped_12, "sites", pch=pchs,
-       col=cols, bg=bgs)
-arrows(0,0,skin_grouped_pca$rotation[,1]*3, skin_grouped_pca$rotation[,3]*3, col="black")
+       col=cols, bg=bgs, cex=1.6)
 text(skin_grouped_pca$rotation[,1]*3.5, skin_grouped_pca$rotation[,3]*3.5,
      row.names(skin_grouped_pca$rotation), col="black")
 legend("bottomright", legend=c("Entry", "Holding", "Post-spawn", "Pre-stream", "Hansen",
                            "Pick", "Female", "Male"),
        fill=c(1, 2, 3, "white", "white", "white", "white", "white"), border="white",
        pch=c(NA, NA, NA, 21, 22, 24, 21, 21),
-       pt.bg=c(NA, NA, NA, "white", "white", "white", "black", "white"))
+       pt.bg=c(NA, NA, NA, "white", "white", "white", "gray50", "white"))
+dev.off()
