@@ -1,4 +1,6 @@
 
+rm(list=ls())
+
 library(car)
 library(lsmeans)
 # library(dplyr)
@@ -20,19 +22,22 @@ allfa[,-(1:3)] <- asin(sqrt(allfa[,-(1:3)]))
 allfa$Sample.ID <- str_match(allfa$Sample.ID, '(\\d+)-.*')[,2]
 #separate creeks
 hanson <- allfa[which(allfa$Creek == 'H'),]
+rownames(hanson) <- 1:nrow(hanson)
 hfa <- as.matrix(hanson[,-(1:3)])
 pick <- allfa[which(allfa$Creek == 'P'),]
+rownames(pick) <- 1:nrow(pick)
 pfa <- as.matrix(pick[,-(1:3)])
 
 
 
-mod1 <- lm(hfa ~ hanson$Location)
+mod1 <- lm(hfa[,4:6] ~ hanson$Location)
+mod1 <- glm(hfa[,4:6] ~ hanson$Location)
 man1 <- Anova(mod1)
 summary(man1)
 rg1 <- ref.grid(mod1)
 contrast(rg1, method='pairwise')
 
-mod_skin_grp_1 <- lm(FA_skin_grouped ~ location, data=skin)
+mod_skin_grp_1 <- lm(FA_skin_grouped ~ location, family=quasibinomial(link='logit'), data=skin)
 summary(mod_skin_grp_1)
 manova_skin_grp_1 <- Anova(mod_skin_grp_1)
 summary(manova_skin_grp_1)
