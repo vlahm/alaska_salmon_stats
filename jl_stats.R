@@ -9,6 +9,7 @@
 #location alone is driving variation.  This probably simplifies things quite a bit for your interpretation.
 
 setwd('/home/mike/git/alaska_salmon_stats')
+setwd('C:/Users/Mike/git/j_lee_stats_2015')
 library(car)
 library(lsmeans)
 
