@@ -5,7 +5,7 @@
 setwd('C:/Users/Mike/git/j_lee_stats_2015')
 dev.off()
 rm(list=ls())
-windows(record=T)
+windows(8, 6, record=T)
 
 #setup####
 data <- read.csv('jl_plotdata.csv')
@@ -60,6 +60,8 @@ error.bars(bylocation$location, data$w3w6_mean[1:3], data$w3w6_sd[1:3])
 
 
 #Fig 2a (including creek) [still in progress]
+# pdf(width=7, height=6, file='plots/Fig2a.pdf', compress=FALSE)
+tiff(width=7, height=6, units='in', file='plots/Fig2a.tiff', type='cairo', res=96)
 par(mar=c(4.5,4.5,4,4), xpd=TRUE)
 plot(byloc_and_creek$location[c(1,2,4)], byloc_and_creek$safa_mean[c(1,2,4)], type='l', col='steelblue3', ylim=c(0,80),
      xlab='', ylab='', xaxt='n', las=2, lwd=2, bty='l', yaxs='i')
@@ -94,3 +96,4 @@ legend(x=.935, y=82.5, legend=c('  SFA', '  MUFA', '  PUFA'),
        fill=c('steelblue3', 'darkorchid4', 'green4'), bty='n')
 legend(x=.9, y=69.5, legend=c('Hanson', 'Pick'), lty=1:2, bty='n', lwd=2)
 mtext('Time', 1, line=2.5, font=2, cex=1.3)
+dev.off()
