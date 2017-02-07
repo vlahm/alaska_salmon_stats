@@ -1,5 +1,6 @@
 #change this path so that it points to the folder "j_lee_stats_2015" on your computer
 setwd("C:/Users/Mike/git/j_lee_stats_2015")
+setwd("/home/mike/git/alaska_salmon_stats")
 
 #run all of this
 mass <- read.csv('massFAsum.csv')
@@ -27,18 +28,38 @@ error.bars(mids, means, sds)
 
 #run this section to see a plot of mass by stream
 #(make sure the plot window is big enough to see labels)
-means1 <- tapply(mass$Mass.FA.sum, mass$Stream, mean)
-sds1 <- tapply(mass$Mass.FA.sum, mass$Stream, sd)
-mids1 <- barplot(means1[c(1,3)], ylim=c(0, max(means1+sds1)), ylab='mass FA sum')
-error.bars(mids1, means1[c(1,3)], sds1[c(1,3)])
+means1 <- tapply(mass$Mass.FA.sum, mass$Stream, mean, na.rm=TRUE)
+sds1 <- tapply(mass$Mass.FA.sum, mass$Stream, sd, na.rm=TRUE)
+mids1 <- barplot(means1, ylim=c(0, max(means1+sds1)), ylab='mass FA sum')
+error.bars(mids1, means1, sds1)
 
 #run this section to see a plot of mass by timepoint*stream
 #(make sure the plot window is big enough to see labels)
-means2 <-aggregate(mass$Mass.FA.sum, list(mass$TimePt, mass$Stream), mean)
-sds2 <- aggregate(mass$Mass.FA.sum, list(mass$TimePt, mass$Stream), sd)
-mids2 <- barplot(means2[,3], ylim=c(0, max(means2[,3]+sds2[,3])),
-                 names.arg=paste(means2[,1], means2[,2]), ylab='mass FA sum')
-error.bars(mids2, means2[,3], sds2[,3])
+sites <- as.vector(mass$Stream)
+sites[is.na(sites)] <- 'Entry'
+sites <- factor(sites)
+
+pdf('massFAsum.pdf', width=6, height=5)
+defpar <- par(mar=c(4,4,1,0))
+means2 <-aggregate(mass$Mass.FA.sum, list(mass$TimePt, sites), mean)
+SEs2 <- aggregate(mass$Mass.FA.sum, list(mass$TimePt, sites),
+                  function(i) sd(i)/sqrt(length(i)))
+mids2 <- barplot(means2[,3][c(1,2,4,3,5)], ylim=c(0, max(means2[,3]+sds2[,3])),
+     # names.arg=paste(means2[,1], means2[,2]),
+     ylab='', xlim=c(0,10),
+     names.arg='', space=c(.2,.8,.2,.8,.2),
+     density=c(-1,-1,30,-1,30), legend.text=c('','Hansen','Pick'),
+     width=1.1, col=c('white',rep('gray40',4)), lwd=1.5,
+     args.legend=list(x=10.1, y=240, bty='n',
+                      border=c('white','black','black')))
+error.bars(mids2, means2[,3][c(1,2,4,3,5)], SEs2[,3][c(1,2,4,3,5)],
+           cap.length=.05)
+axis(1, at=c(.8,3.4,6.7), labels=c('Lake entry', 'Holding', 'Post-spawn'),
+     tick=FALSE, line=NA, padj=-1)
+mtext('Time', 1, line=2, font=2, cex=1.3, at=4)
+mtext('FA %', 2, line=2.4, font=2, cex=1.3)
+par(defpar)
+dev.off()
 
 #does time alone affect mass?
 mod1 <- lm(Mass.FA.sum ~ TimePt, data=mass)
