@@ -44,20 +44,20 @@ defpar <- par(mar=c(4,4,1,0))
 means2 <-aggregate(mass$Mass.FA.sum, list(mass$TimePt, sites), mean)
 SEs2 <- aggregate(mass$Mass.FA.sum, list(mass$TimePt, sites),
                   function(i) sd(i)/sqrt(length(i)))
-mids2 <- barplot(means2[,3][c(1,2,4,3,5)], ylim=c(0, max(means2[,3]+sds2[,3])),
+mids2 <- barplot(means2[,3][c(1,2,4,3,5)], ylim=c(0, max(means2[,3]+SEs2[,3])),
      # names.arg=paste(means2[,1], means2[,2]),
      ylab='', xlim=c(0,10),
      names.arg='', space=c(.2,.8,.2,.8,.2),
      density=c(-1,-1,30,-1,30), legend.text=c('','Hansen','Pick'),
      width=1.1, col=c('white',rep('gray40',4)), lwd=1.5,
-     args.legend=list(x=10.1, y=240, bty='n',
+     args.legend=list(x=10.2, y=200, bty='n',
                       border=c('white','black','black')))
 error.bars(mids2, means2[,3][c(1,2,4,3,5)], SEs2[,3][c(1,2,4,3,5)],
            cap.length=.05)
 axis(1, at=c(.8,3.4,6.7), labels=c('Lake entry', 'Holding', 'Post-spawn'),
      tick=FALSE, line=NA, padj=-1)
-mtext('Time', 1, line=2, font=2, cex=1.3, at=4)
-mtext('FA %', 2, line=2.4, font=2, cex=1.3)
+mtext('Time', 1, line=2, font=2, cex=1.1, at=4)
+mtext('Mass FA Sum (Vs/mg)', 2, line=2.8, font=2, cex=1)
 par(defpar)
 dev.off()
 
